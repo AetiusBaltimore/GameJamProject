@@ -17,14 +17,19 @@ public class PlayerMovement : MonoBehaviour {
 	public float dashSpeed; 
 	[SerializeField]
 	bool canDash; 
-	float dashCD; 
+	public float dashDur;
+	public float dashCD; 
 	
 	float playerAirSpeed; 
 	float playerJumpHeight; 
 
-	bool facingLeft; 
-	bool playerFalling; 
+	bool facingLeft;
+	//bool playerFalling; 
 	bool playerGrounded;
+	
+	public bool FacingLeft{
+		get {return facingLeft;}
+	}
 	
 	void Start () {
 		playerSR = GetComponent<SpriteRenderer>(); 
@@ -34,9 +39,9 @@ public class PlayerMovement : MonoBehaviour {
 		playerSpeed = 12f;
 		playerAirSpeed = 100f;
 		playerJumpHeight = 150f; 
-		dashSpeed = 10f; 
-		dashCD = 2f;
-		
+		dashSpeed = 30f; 
+		dashCD = .3f;
+		dashDur = .3f; 
 		
 		facingLeft = false;
 		canMove = true; 
@@ -45,8 +50,12 @@ public class PlayerMovement : MonoBehaviour {
 	
 	void FixedUpdate () {
 		//CheckPlayerFalling(); 
+		if(gameObject.transform.position.y <= -5.5f){
+			//die
+			return;
+		}
 		
-		if (Input.GetKeyDown("f") && (canDash)){
+		if (Input.GetButtonDown("Dash") && (canDash)){
 			StartCoroutine("Dash");
 		}
 		
@@ -67,7 +76,7 @@ public class PlayerMovement : MonoBehaviour {
 				facingLeft = !facingLeft; 
 				SetFace(); 
 			}
-		} else {
+		} else if (moveX >= .01f){
 			if (facingLeft){
 				facingLeft = !facingLeft; 
 				SetFace(); 
@@ -84,7 +93,6 @@ public class PlayerMovement : MonoBehaviour {
 		print ("Dashed"); 
 		canDash = false; 
 		canMove = false; 
-		float dashDur = 1.2f; 
 		float time = 0f; 
 		
 		while (dashDur > time){
@@ -125,18 +133,18 @@ public class PlayerMovement : MonoBehaviour {
 		//}
 	}
 	
-	void CheckPlayerFalling(){
-		bool falling; 
-		if (playerRB.velocity.y <= -.1f){
-			falling = true; 
-		} else {
-			falling = false;  
-		} 
+	// void CheckPlayerFalling(){
+		// bool falling; 
+		// if (playerRB.velocity.y <= -.1f){
+			// falling = true; 
+		// } else {
+			// falling = false;  
+		// } 
 		
-		if (falling != playerFalling){
-			anim.SetBool("Falling", falling);
-		}
-	}
+		// if (falling != playerFalling){
+			// anim.SetBool("Falling", falling);
+		// }
+	// }
 	
 	void OnCollisionEnter2D (Collision2D col){
 		if (col.gameObject.CompareTag("Ground")){
