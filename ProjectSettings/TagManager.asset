@@ -8,6 +8,8 @@ TagManager:
   - HUD
   - Enemy
   - Shield
+  - PatrolArea
+  - SmallHealthPickup
   layers:
   - Default
   - TransparentFX

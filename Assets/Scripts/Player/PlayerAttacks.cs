@@ -4,53 +4,138 @@ using UnityEngine;
 
 public class PlayerAttacks : MonoBehaviour {
 
-	public GameObject projectilePrefab; 
+	public GameObject bulletPrefab; 
+	public GameObject missilePrefab;
+	public GameObject chakramPrefab; 
 	
 	PlayerMovement PM; 
-		
+	PlayerStats PS; 	
+	
 	GameObject curBullet;
 	Vector2 curBulletDir;
 	Quaternion curBulletRot; 
 	
+	Rigidbody2D bulletRB;
+	
 	float projectileVelocity; 
 	float aimY; 
+	
+	float bulletCD;
+	float missileCD;
+	float chakramCD; 
+	
+	bool canShootBullet;
+	bool canShootMissile; 
+	bool canShootChakram;
+	bool connectedToGrapple; 
+	
+	float missileEnergyCost; 
+	float chakramEnergyCost; 
 
 	void Start () {
 		PM = GetComponent<PlayerMovement>(); 
+		PS = GetComponent<PlayerStats>(); 
 		
-		projectileVelocity = 50000f; 
+		projectileVelocity = 50000f;
+
+		bulletCD = .2f; 
+		missileCD = 1f;
+		chakramCD = .5f;
+
+		canShootBullet = true; 
+		canShootMissile = true;
+		canShootChakram = true;
+		
+		missileEnergyCost = 10f;
+		chakramEnergyCost = 20f; 
+		
+		connectedToGrapple = false; 
 	}
 	
 	void Update () {
-		if (Input.GetButtonDown("Shoot Bullet")){
+		if (Input.GetButtonDown("Shoot Bullet") && canShootBullet){
 			StartCoroutine("ShootBullet"); 
+		}
+		
+		if (Input.GetButtonDown("Shoot Missile")){
+			if (PS.Energy>=10f){
+				if (canShootMissile){
+					StartCoroutine("ShootMissile");
+				} else {
+					print("Missile still cooling down!");
+				}
+			} else {
+				print("Not enough energy!"); 
+			}
+		}
+		
+		if (Input.GetButtonDown("Shoot Chakram")){
+			if (PS.Energy>=20f){
+				if (canShootChakram){
+					StartCoroutine("ShootChakram"); 
+				} else {
+					print("Missile still cooling down!");
+				}
+			} else {
+				print("Not enough energy!"); 
+			}
 		}
 	}
 	
 	void CreateBullet(){
-		curBullet = (GameObject)Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+		curBullet = (GameObject)Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+	}
+	
+	void CreateMissile(){
+		curBullet = (GameObject)Instantiate(missilePrefab, transform.position, Quaternion.identity); 
+	}
+	
+	void CreateChakram(){
+		curBullet = (GameObject)Instantiate(chakramPrefab, transform.position, Quaternion.identity); 
 	}
 	
 	IEnumerator ShootBullet(){
+		canShootBullet = false; 
 		CreateBullet();
 		CreateBulletDir();
 		MoveBullet();
-		yield return new WaitForSeconds(.2f); 
+		yield return new WaitForSeconds(bulletCD);
+		canShootBullet = true; 
+	}
+	
+	IEnumerator ShootMissile(){
+		PS.DrainEnergy(missileEnergyCost); 
+		canShootMissile = false;
+		CreateMissile(); 
+		CreateBulletDir();
+		MoveBullet();
+		yield return new WaitForSeconds(missileCD); 
+		canShootMissile = true;			
+	}
+	
+	IEnumerator ShootChakram(){
+		PS.DrainEnergy(chakramEnergyCost); 
+		canShootChakram = false;
+		CreateChakram();
+		CreateBulletDir();
+		MoveBullet(); 
+		yield return new WaitForSeconds(chakramCD);
+		if(!connectedToGrapple){
+			canShootChakram = true; 
+		}
 	}
 	
 	void MoveBullet(){
-		Rigidbody2D bulletRB; 
-			bulletRB = curBullet.GetComponent<Rigidbody2D>(); 
-			curBullet.transform.rotation = curBulletRot;
-			if (curBullet != null){ 
-				bulletRB.AddForce(curBulletDir*Time.deltaTime*projectileVelocity); 
-			}
+		bulletRB = curBullet.GetComponent<Rigidbody2D>(); 
+		curBullet.transform.rotation = curBulletRot;
+		if (curBullet != null){ 
+			bulletRB.AddForce(curBulletDir*Time.deltaTime*projectileVelocity); 
+		}
 	}
 	
 	void CreateBulletDir(){
-		aimY = Input.GetAxis("Vertical");
+		aimY = Input.GetAxisRaw("Vertical");
 		if(PM.FacingLeft){
-			
 			if (aimY >= .1f){
 				curBulletDir = new Vector2(-1f,1f);
 				curBulletRot = Quaternion.AngleAxis(-45f, Vector3.forward); 

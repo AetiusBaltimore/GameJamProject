@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour {
 	bool canMove; 
 	bool playerMoving; 
 	float moveX;
-	float playerSpeed; 
+	float speed; 
 
 	public float dashSpeed; 
 	[SerializeField]
@@ -20,9 +20,12 @@ public class PlayerMovement : MonoBehaviour {
 	public float dashDur;
 	public float dashCD; 
 	
-	float playerAirSpeed; 
-	float playerJumpHeight; 
+	public float airSpeed; 
+	public float jumpHeight; 
 
+	bool jumping;
+	bool dashing;
+	
 	bool facingLeft;
 	//bool playerFalling; 
 	bool playerGrounded;
@@ -36,32 +39,38 @@ public class PlayerMovement : MonoBehaviour {
 		playerRB = GetComponent<Rigidbody2D>(); 
 		//anim = GetComponent<Animator>(); 
 		
-		playerSpeed = 12f;
-		playerAirSpeed = 100f;
-		playerJumpHeight = 150f; 
+		speed = 12f;
+		airSpeed = 100f;
+		jumpHeight = 1000f; 
 		dashSpeed = 30f; 
 		dashCD = .3f;
 		dashDur = .3f; 
 		
 		facingLeft = false;
 		canMove = true; 
-		canDash = true; 
+		canDash = true;
+
+		jumping = false;
+		dashing = false; 
+	}
+	
+	void Update(){
+		if (Input.GetButtonDown("Jump") && (playerGrounded)) {
+			jumping = true;
+		}
+		if (Input.GetButtonDown("Dash") && (canDash)){
+			dashing = true;
+		} 
 	}
 	
 	void FixedUpdate () {
-		//CheckPlayerFalling(); 
-		if(gameObject.transform.position.y <= -5.5f){
-			//die
-			return;
-		}
-		
-		if (Input.GetButtonDown("Dash") && (canDash)){
+		//CheckPlayerFalling(); 		
+		if (dashing){
 			StartCoroutine("Dash");
 		}
 		
-		if (Input.GetButtonDown("Jump") && (playerGrounded)) {
-				print ("Player pressed jump"); 
-				Jump();
+		if (jumping) { 
+				Jump(); 
 			}
 		
 		if (canMove){
@@ -82,7 +91,7 @@ public class PlayerMovement : MonoBehaviour {
 				SetFace(); 
 			}
 		}
-		playerRB.velocity = new Vector2 (moveX*playerSpeed, playerRB.velocity.y); 
+		playerRB.velocity = new Vector2 (moveX*speed, playerRB.velocity.y); 
 	}
 	
 	void SetFace(){
@@ -90,17 +99,28 @@ public class PlayerMovement : MonoBehaviour {
 	}
 	
 	IEnumerator Dash(){
-		print ("Dashed"); 
+		dashing = false; 
 		canDash = false; 
 		canMove = false; 
 		float time = 0f; 
 		
 		while (dashDur > time){
+			if (Input.GetButtonDown("Jump")&& !jumping){
+				//airspeed = 400000f;
+				jumpHeight = 5000000f;
+				DashJump();
+				jumpHeight = 1000f; 
+				canMove = true;
+				canDash = true; 
+				//airspeed = 100f; 
+				//jumpHeight = 150f; 
+				yield break; 
+			}
 			time += Time.deltaTime; 
 			if (facingLeft){
-				playerRB.velocity = Vector2.left*dashSpeed; 
+				playerRB.AddForce(new Vector2(-1*dashSpeed,playerRB.velocity.y)); 
 			} else {
-				playerRB.velocity = Vector2.right*dashSpeed; 
+				playerRB.AddForce(new Vector2(1*dashSpeed,playerRB.velocity.y)); 
 			}
 			yield return 0; 
 		}
@@ -110,27 +130,15 @@ public class PlayerMovement : MonoBehaviour {
 	}
 	
 	void Jump(){
-		print ("Player jumped");
-		//bool jumping = true; 
-		//if (!jumping){
-			if (playerGrounded){
-				if (moveX > 0.1f){
-					playerRB.AddForce (Vector2.up * playerJumpHeight, ForceMode2D.Impulse);
-					playerRB.AddForce (Vector2.right * playerAirSpeed, ForceMode2D.Impulse);
-					playerGrounded = false;
-				}else if (moveX < -0.1f){
-					playerRB.AddForce (Vector2.up * playerJumpHeight, ForceMode2D.Impulse);
-					playerRB.AddForce (Vector2.left * playerAirSpeed, ForceMode2D.Impulse);
-					playerGrounded = false;
-				} else {
-					playerRB.AddForce (Vector2.up * playerJumpHeight, ForceMode2D.Impulse);
-					playerGrounded = false;
-				}
-				//yield return new WaitForSeconds(.2f); 
-				//canAirJump = true;
-				//jumping = false; 
-			}
-		//}
+		jumping = false;
+		playerRB.AddForce(new Vector2(playerRB.velocity.x*airSpeed,1*jumpHeight)*Time.deltaTime, ForceMode2D.Impulse); 	
+		playerGrounded = false; 
+	}
+	
+	void DashJump(){
+		jumping = false;
+		playerRB.AddForce(new Vector2(playerRB.velocity.x*airSpeed,1*jumpHeight), ForceMode2D.Impulse); 
+		playerGrounded = false; 
 	}
 	
 	// void CheckPlayerFalling(){
@@ -148,6 +156,9 @@ public class PlayerMovement : MonoBehaviour {
 	
 	void OnCollisionEnter2D (Collision2D col){
 		if (col.gameObject.CompareTag("Ground")){
+			playerGrounded = true; 
+		}
+		if (col.gameObject.CompareTag("Enemy")){
 			playerGrounded = true; 
 		}
 	}

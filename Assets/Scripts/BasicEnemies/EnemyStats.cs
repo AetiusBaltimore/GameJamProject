@@ -14,6 +14,12 @@ public class EnemyStats : MonoBehaviour {
 		health = 2f; 
 	}
 	
+	void Update(){
+		if(gameObject.transform.position.y <= -5.5f){
+			Destroy(gameObject);
+		}
+	}
+	
 	public void TakeDamage(float damage){
 		health -= damage;
 		print (gameObject.name+" took "+damage.ToString()+" and has "+health.ToString()+" left"); 
