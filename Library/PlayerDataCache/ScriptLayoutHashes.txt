@@ -2,8 +2,10 @@ WindowsStandalone
 PlayerPath?
 C:/Users/stewartch/Documents/UnityBuilds/GameJam/GameJam.exe
 SceneListBegin?
-Assets/Scenes/Test Scene.unity
+Assets/Scenes/TestScene.unity
+Assets/Scenes/TestBossBattle.unity
 SceneListEnd?
+05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.ChakramCollision
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationPlayableAsset
 cf455f7a806648c6ed4c7d3e3f8a0e03 UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationTrack
 13bdb7c23815c33a33b37b0ba8dd39be UnityEngine.Timeline.dll:UnityEngine.Timeline.AnimationPlayableAsset
@@ -16,7 +18,8 @@ ff05dcdf90651c3d98a9cad3df5e471e UnityEngine.Timeline.dll:UnityEngine.Timeline.C
 30afa8783a8bbee2e465ec9ce1efaee2 UnityEngine.Timeline.dll:UnityEngine.Timeline.GroupTrack
 30afa8783a8bbee2e465ec9ce1efaee2 UnityEngine.Timeline.dll:UnityEngine.Timeline.PlayableTrack
 607d64d2c4bc76ac9876e6f7b9cc7edf UnityEngine.Timeline.dll:UnityEngine.Timeline.TimelineAsset
-8ac443a075771c29911d96ad322cf058 Assembly-CSharp.dll:.HUDupdate
+24992e548e095fd50f57d9de3106570d Assembly-CSharp.dll:.PauseScript
+de06f292cf3ebdfaebbd5531f7ea9610 Assembly-CSharp.dll:.HUDupdate
 a35dc9cca2faebc5f5f1aeb9e8e47bbe UnityEngine.UI.dll:UnityEngine.UI.AspectRatioFitter
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.UI.dll:UnityEngine.EventSystems.BaseInput
 49cd62a578efc0a599b810a2b66cd49c UnityEngine.UI.dll:UnityEngine.UI.Button
@@ -115,7 +118,8 @@ bc68edb0af574bf79f9550ead8ebae5c UnityEngine.HoloLens.dll:UnityEngine.Audio.Audi
 463516d5b5fe8e67a0a24c48f2095b04 UnityEngine.HoloLens.dll:UnityEngine.EventSystems.HoloLensInputModule
 c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.SpatialMappingCollider
 45f3431f0103c41611e8d4eec3d439df UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.SpatialMappingRenderer
-58ed9fabdbbc5bc8af2f68af0bee840e Assembly-CSharp.dll:.PlayerMovement
+ed6c5c1f7780fcabd2005f57aff84365 Assembly-CSharp.dll:.FlyingEnemyPatrol
+2fd5c39e20579c5d503f9d625303c5dd Assembly-CSharp.dll:.PlayerMovement
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.BulletCollision
 fc1e0f4d8439d9928083474691511a13 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkAnimator
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Networking.dll:UnityEngine.Networking.NetworkBehaviour
@@ -131,6 +135,7 @@ e9bdabf9265d758d56f01bb188916fa8 UnityEngine.Networking.dll:UnityEngine.Networki
 3f32f08a64daf40b09ed864d96fe3840 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkTransform
 73843688b51256aed059f049c540bca8 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkTransformChild
 528ea1fd7c01796fc60c4e2f172ea229 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkTransformVisualizer
+05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.MissileCollision
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.TestRunner.dll:UnityEngine.TestTools.TestRunner.Callbacks.PlayModeRunnerCallback
 f02726adeff0a3ec5905565234b372da UnityEngine.TestRunner.dll:UnityEngine.TestTools.TestRunner.PlaymodeTestsController
 64eb32cc721b1cc68a91ed57461e188c UnityEngine.TestRunner.dll:UnityEngine.TestTools.TestRunner.Callbacks.RemoteTestResultSender
@@ -147,9 +152,10 @@ bc68edb0af574bf79f9550ead8ebae5c UnityEngine.HoloLens.dll:UnityEngine.Audio.Audi
 463516d5b5fe8e67a0a24c48f2095b04 UnityEngine.HoloLens.dll:UnityEngine.EventSystems.HoloLensInputModule
 c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.SpatialMappingCollider
 45f3431f0103c41611e8d4eec3d439df UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.SpatialMappingRenderer
+05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.AudioManager
 9de3a22eca9aefadba2d10d5987cefe3 UnityEngine.SpatialTracking.dll:UnityEngine.SpatialTracking.TrackedPoseDriver
 43fee54f7dc3c1a65aa449a1bbc79f3d Assembly-CSharp.dll:.BattleCameraSystem
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.EnemyStats
-4596896d48d9ad066b201de66c1727c2 Assembly-CSharp.dll:.PlayerAttacks
-829175d316c732639b55f7832bf9263d Assembly-CSharp.dll:.PlayerStats
-24992e548e095fd50f57d9de3106570d Assembly-CSharp.dll:.PauseScript
+150c1e11e9d2f392626c467b7e862612 Assembly-CSharp.dll:.EnemyPatrol
+4d1eadda44b64dd4f6e148f0bdbd72ad Assembly-CSharp.dll:.PlayerAttacks
+3e0a48e3549efe78d46d6c7a23d91949 Assembly-CSharp.dll:.PlayerStats

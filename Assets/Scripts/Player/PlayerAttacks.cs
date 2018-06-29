@@ -27,11 +27,14 @@ public class PlayerAttacks : MonoBehaviour {
 	bool canShootBullet;
 	bool canShootMissile; 
 	bool canShootChakram;
-	bool connectedToGrapple; 
 	
 	float missileEnergyCost; 
-	float chakramEnergyCost; 
+	float chakramEnergyCost;
 
+	public bool CanShootChakram{
+		set{canShootChakram = value;}
+	}
+	
 	void Start () {
 		PM = GetComponent<PlayerMovement>(); 
 		PS = GetComponent<PlayerStats>(); 
@@ -48,8 +51,6 @@ public class PlayerAttacks : MonoBehaviour {
 		
 		missileEnergyCost = 10f;
 		chakramEnergyCost = 20f; 
-		
-		connectedToGrapple = false; 
 	}
 	
 	void Update () {
@@ -58,7 +59,7 @@ public class PlayerAttacks : MonoBehaviour {
 		}
 		
 		if (Input.GetButtonDown("Shoot Missile")){
-			if (PS.Energy>=10f){
+			if (PS.Energy>=missileEnergyCost){
 				if (canShootMissile){
 					StartCoroutine("ShootMissile");
 				} else {
@@ -70,11 +71,11 @@ public class PlayerAttacks : MonoBehaviour {
 		}
 		
 		if (Input.GetButtonDown("Shoot Chakram")){
-			if (PS.Energy>=20f){
+			if (PS.Energy>=chakramEnergyCost){
 				if (canShootChakram){
 					StartCoroutine("ShootChakram"); 
 				} else {
-					print("Missile still cooling down!");
+					print("Chakram still cooling down!");
 				}
 			} else {
 				print("Not enough energy!"); 
@@ -118,9 +119,10 @@ public class PlayerAttacks : MonoBehaviour {
 		canShootChakram = false;
 		CreateChakram();
 		CreateBulletDir();
+		//projectileVelocity *= .7f;
 		MoveBullet(); 
 		yield return new WaitForSeconds(chakramCD);
-		if(!connectedToGrapple){
+		if(!PM.ConnectedToGrapple){
 			canShootChakram = true; 
 		}
 	}

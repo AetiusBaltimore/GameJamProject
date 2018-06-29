@@ -307,6 +307,12 @@ Prefab:
       value: 
       objectReference: {fileID: 1667180915002784, guid: dbb588e795afdf348a54ab0551b4c21d,
         type: 2}
+    - target: {fileID: 114035280686742784, guid: fab4a04a7c81b084bb6b4ccc8766354f,
+        type: 2}
+      propertyPath: chakramPrefab
+      value: 
+      objectReference: {fileID: 1661257033662534, guid: 4a84572e121f57948b164ad18306adbe,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fab4a04a7c81b084bb6b4ccc8766354f, type: 2}
   m_IsPrefabParent: 0
@@ -851,7 +857,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4062058255788554, guid: 90c6963793b2a9446bea6983f3608c85, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 6.1104164
+      value: 4.36
       objectReference: {fileID: 0}
     - target: {fileID: 4062058255788554, guid: 90c6963793b2a9446bea6983f3608c85, type: 2}
       propertyPath: m_LocalPosition.z
@@ -880,6 +886,10 @@ Prefab:
     - target: {fileID: 1317742949196190, guid: 90c6963793b2a9446bea6983f3608c85, type: 2}
       propertyPath: m_Name
       value: Floor (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1317742949196190, guid: 90c6963793b2a9446bea6983f3608c85, type: 2}
+      propertyPath: m_TagString
+      value: Ceiling
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 90c6963793b2a9446bea6983f3608c85, type: 2}
