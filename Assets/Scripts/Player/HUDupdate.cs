@@ -8,8 +8,8 @@ public class HUDupdate : MonoBehaviour {
 
 	PlayerStats ps;
 	
-	public float healthValue;
-	public float energyValue;
+	float healthValue;
+	float energyValue;
 	
 	float healthBarFill;
 	float energyBarFill;
@@ -20,6 +20,15 @@ public class HUDupdate : MonoBehaviour {
 	public Image healthBar;
 	public Image energyBar; 
 	
+	public float HealthValue{
+		get{return healthValue;}
+		set{healthValue = value;}
+	}
+	
+	public float EnergyValue{
+		get{return energyValue;}
+		set{energyValue = value;}
+	}
 	
 	void Start(){
 		ps = GameObject.FindWithTag("Player").GetComponent<PlayerStats>();
