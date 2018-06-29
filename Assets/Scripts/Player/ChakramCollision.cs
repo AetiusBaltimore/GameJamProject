@@ -6,14 +6,24 @@ public class ChakramCollision : MonoBehaviour {
 
 	DistanceJoint2D distanceJoint; 
 	
+	Rigidbody2D bulletRB; 
+	
+	GameObject playerGO;
 	Rigidbody2D playerRB; 
-
+	PlayerMovement PM; 
+	
 	float bulletDamage = 5f; 
 	
 	void Awake(){
 		distanceJoint = GetComponent<DistanceJoint2D>(); 
-		playerRB = GameObject.FindWithTag("Player").GetComponent<Rigidbody2D>(); 
 
+		bulletRB = GetComponent<Rigidbody2D>(); 
+		
+		playerGO = GameObject.FindWithTag("Player"); 
+		playerRB = playerGO.GetComponent<Rigidbody2D>();
+		PM = playerGO.GetComponent<PlayerMovement>(); 
+		
+		
 		distanceJoint.enabled = false; 
 
 	}
@@ -38,9 +48,28 @@ public class ChakramCollision : MonoBehaviour {
 			Destroy(gameObject); 
 		}
 		
+		if (col.gameObject.CompareTag("Ceiling")){
+			ConnectPlayer();
+		}
+		
 		if (col.gameObject.CompareTag("Shield")){
 			Destroy(col.gameObject); 
 			Destroy(gameObject); 
 		}
+	}
+	
+	void ConnectPlayer(){
+		bulletRB.velocity = Vector2.zero;
+		bulletRB.bodyType = RigidbodyType2D.Static;
+		distanceJoint.enabled = true; 
+		distanceJoint.connectedBody = playerRB; 
+		playerRB.gravityScale = 80f;
+		PM.ConnectedToGrapple = true; 
+	}
+	
+	public void DisconnectPlayer(){
+		distanceJoint.enabled = false;
+		playerRB.gravityScale = 5f;
+		Destroy(gameObject); 
 	}
 }

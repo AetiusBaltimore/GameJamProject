@@ -10,6 +10,8 @@ TagManager:
   - Shield
   - PatrolArea
   - SmallHealthPickup
+  - Ceiling
+  - Chakram
   layers:
   - Default
   - TransparentFX

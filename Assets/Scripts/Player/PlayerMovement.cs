@@ -7,6 +7,9 @@ public class PlayerMovement : MonoBehaviour {
 	SpriteRenderer playerSR;
 	Rigidbody2D playerRB;
 	Animator anim; 
+	PlayerAttacks PA; 
+	
+	ChakramCollision CC;
 	
 	[SerializeField]
 	bool canMove; 
@@ -26,6 +29,8 @@ public class PlayerMovement : MonoBehaviour {
 	bool jumping;
 	bool dashing;
 	
+	bool connectedToGrapple;
+	
 	bool facingLeft;
 	//bool playerFalling; 
 	bool playerGrounded;
@@ -34,10 +39,16 @@ public class PlayerMovement : MonoBehaviour {
 		get {return facingLeft;}
 	}
 	
+	public bool ConnectedToGrapple{
+		get {return connectedToGrapple;}
+		set {connectedToGrapple = value;}
+	}
+	
 	void Start () {
 		playerSR = GetComponent<SpriteRenderer>(); 
 		playerRB = GetComponent<Rigidbody2D>(); 
 		//anim = GetComponent<Animator>(); 
+		PA = GetComponent<PlayerAttacks>(); 
 		
 		speed = 12f;
 		airSpeed = 100f;
@@ -61,6 +72,14 @@ public class PlayerMovement : MonoBehaviour {
 		if (Input.GetButtonDown("Dash") && (canDash)){
 			dashing = true;
 		} 
+		
+		if (Input.GetButtonDown("Jump") && connectedToGrapple){
+			CC = GameObject.FindWithTag("Chakram").GetComponent<ChakramCollision>();
+			CC.DisconnectPlayer(); 
+			PA.CanShootChakram = true; 
+			jumping = true; 
+			
+		}
 	}
 	
 	void FixedUpdate () {
