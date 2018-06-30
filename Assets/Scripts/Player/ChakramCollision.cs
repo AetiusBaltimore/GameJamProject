@@ -70,6 +70,7 @@ public class ChakramCollision : MonoBehaviour {
 	public void DisconnectPlayer(){
 		distanceJoint.enabled = false;
 		playerRB.gravityScale = 5f;
+		PM.ConnectedToGrapple = false; 
 		Destroy(gameObject); 
 	}
 }

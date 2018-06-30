@@ -53,7 +53,7 @@ public class PlayerMovement : MonoBehaviour {
 		speed = 12f;
 		airSpeed = 100f;
 		jumpHeight = 1000f; 
-		dashSpeed = 30f; 
+		dashSpeed = 100f; 
 		dashCD = .3f;
 		dashDur = .3f; 
 		
@@ -78,7 +78,6 @@ public class PlayerMovement : MonoBehaviour {
 			CC.DisconnectPlayer(); 
 			PA.CanShootChakram = true; 
 			jumping = true; 
-			
 		}
 	}
 	
